@@ -1,0 +1,101 @@
+class CM:
+    cash = 550
+    water = 400
+    milk = 540
+    beans = 120
+    cups = 9
+
+    def __init__(self, act):
+        self.act = act
+
+
+    def take(self):
+        if self.act == 'take':
+            print(f"I gave you ${CM.cash}")
+            CM.cash = 0
+
+    def remaining(self):
+        print("""The coffee machine has:
+        {} of water,
+        {} of milk,
+        {} of coffee beans,
+        {} of disposable cups,
+        {} of money""".format(CM.water, CM.milk, CM.beans, CM.cups, CM.cash))
+
+    def fill(self, water, milk, beans, cups):
+        self.w = water
+        self.m = milk
+        self.b = beans
+        self.c = cups
+        CM.water += self.w
+        CM.milk += self.m
+        CM.beans += self.b
+        CM.cups += self.c
+
+    def buy(self, option):
+        self.o = option
+        while option == '1':
+            if CM.water >= 250 and CM.beans >= 16:
+                CM.water -= 250
+                CM.beans -= 16
+                CM.cups -= 1
+                CM.cash += 4
+                return "I have enough resources, making you a coffee!"
+            elif CM.water < 250 and CM.beans >= 16:
+                return "Sorry, not enough water!"
+            elif CM.water >= 250 and CM.beans < 16:
+                return "Sorry, not enough coffee beans!"
+            else:
+                return "Sorry, not enough coffee beans and water!"
+        while option == '2':
+            if CM.water >= 350 and CM.beans >= 20 and CM.milk >= 75:
+                CM.water -= 350
+                CM.beans -= 20
+                CM.milk -= 75
+                CM.cups -= 1
+                CM.cash += 7
+                return "I have enough resources, making you a coffee!"
+            elif CM.water < 350:
+                return "Sorry, not enough water!"
+            elif CM.beans < 20:
+                return "Sorry, not enough coffee beans!"
+            elif CM.milk < 75:
+                return "Sorry, not enough milk!"
+            else:
+                return "Sorry not enough resources! "
+        while option == '3':
+            if CM.water >= 200 and CM.milk >= 100 and CM.beans >= 12:
+                CM.water -= 200
+                CM.milk -= 100
+                CM.beans -= 12
+                CM.cups -= 1
+                CM.cash += 6
+                return "I have enough resources, making you a coffee!"
+            elif CM.water < 200:
+                return "Sorry, not enough water!"
+            elif CM.beans < 12:
+                return "Sorry, not enough coffee beans!"
+            elif CM.milk < 100:
+                return "Sorry, not enough milk!"
+            else:
+                return "Sorry not enough resources! "
+        while option == "back":
+            break
+
+while True:
+    action = CM(input("Write action (buy, fill, take, remaining, exit): "))
+    if action.act == 'take':
+        action.take()
+    elif action.act == 'remaining':
+        action.remaining()
+    elif action.act == 'fill':
+        w = int(input("Write how many ml of water do you want to add: "))
+        m = int(input("Write how many ml of milk do you want to add: "))
+        b = int(input("Write how many grams of coffee beans do you want to add: "))
+        c =int(input("Write how many disposable cups of coffee do you want to add: "))
+        action.fill(w, m, b, c)
+    elif action.act == 'buy':
+        o = input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu: ")
+        print(action.buy(o))
+    elif action.act == 'exit':
+        break
